@@ -195,8 +195,11 @@ def remove_dup_2(base_path, new_paths):
         new_file_map, _ = load_all_files(new_path)
         for new_file, md5 in new_file_map.items():
             if md5_map.get(md5, None) is not None:
-                print("%s is dup with %s" % (new_file, md5_map[md5]))
-                os.remove(new_file)
+                try:
+                    print("%s is dup with %s" % (new_file, md5_map[md5]))
+                    os.remove(new_file)
+                except PermissionError as e:
+                    print(2)
 
 
 def remove_empty_dir(path):
